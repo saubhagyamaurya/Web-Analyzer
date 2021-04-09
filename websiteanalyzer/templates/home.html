@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        {% include 'includes/header.html' %}
+        <br/><br/>
+        <form  method="POST">
+        <div class = "row">
+            
+                {%csrf_token %}                
+                <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Base Url" name = "baseurl" value="{{data.baseurl}}"></div>
+                <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Current Url" name = "currenturl" value="{{data.currenturl}}"></div>
+                <div class ="col-md-4"><input class="btn btn-outline-primary" type="submit" value="Process"></div>
+                <small class="form-text text-muted container-fluid col-md-4">Base URL of any Website Ex: www.abc.com</small>
+                <small class="form-text text-muted container-fluid col-md-4">Current URL of any Website Ex: www.abc.com/about/  or about.extension</small>
+                <small class="form-text text-muted container-fluid col-md-4"></small>
+                <br/><br/>
+                
+            </form>
+        </div>
+
+        <br/><br/>
+        
+          <div class="table-responsive w-100 p-1 h-100 ">  
+            <table class = 'table table-bordered table-condensed card-header'>                
+                    <tr><th>Internal Links</th>
+                        <th>File Name</th>
+                        <th>External Links</th></tr>
+                    <tr>
+                        <td>
+                            <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                                {% for item in data.internallinks%}
+                                <tr>
+                                    <td>
+                                        {{item}}
+                                    </td>
+                                </tr>
+                                {%  endfor  %}
+                            </table>
+                        </td>
+                        <td>
+                        <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                            {% for item in data.internallinkname%}
+                                <tr>
+                                    <td>
+                                     <a href="">{{item}}</a>
+                                    </td>
+                                </tr>
+                                {%  endfor  %}
+                        </table>
+                        </td>
+                        <td>
+                            <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                                {% for item in data.externallinks%}
+                                    <tr>
+                                        <td>
+                                            {{item}}
+                                        </td>
+                                    </tr>
+                                    {%  endfor  %}
+                            </table>
+                            </td>
+                    </tr>
+                    
+        </table>
+            
+    </div>
+
+        <div class = "container-fluid h-100 p-4">
+            
+        </div>
+        {% include 'includes/footer.html' %}
+    </div>
+</body>
+</html>
