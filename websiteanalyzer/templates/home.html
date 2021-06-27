@@ -3,33 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Website Analyzer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <div class="container-fluid">
         {% include 'includes/header.html' %}
         <br/><br/>
         <form  method="POST">
-        <div class = "row">
-            
-                {%csrf_token %}                
-                <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Base Url" name = "baseurl" value="{{data.baseurl}}"></div>
-                <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Current Url" name = "currenturl" value="{{data.currenturl}}"></div>
-                <div class ="col-md-4"><input class="btn btn-outline-primary" type="submit" value="Process"></div>
-                <small class="form-text text-muted container-fluid col-md-4">Base URL of any Website Ex: www.abc.com</small>
-                <small class="form-text text-muted container-fluid col-md-4">Current URL of any Website Ex: www.abc.com/about/  or about.extension</small>
-                <small class="form-text text-muted container-fluid col-md-4"></small>
-                <br/><br/>
+            <div class = "row">
                 
-            </form>
-        </div>
-
-        <br/><br/>
-        
+                    {%csrf_token %}                
+                    <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Base Url" name = "baseurl" value="{{data.baseurl}}" required></div>
+                    <div class="container-fluid col-md-4 "><input class="form-control" type = "text" placeholder="Current Url" name = "currenturl" value="{{data.currenturl}}" required></div>
+                    <div class ="col-md-4"><input class="btn btn-outline-primary" type="submit" value="Process"></div>
+                    <small class="form-text text-muted container-fluid col-md-4">Base URL of any Website Ex: www.abc.com</small>
+                    <small class="form-text text-muted container-fluid col-md-8">Current URL of any Website Ex: www.abc.com/about/  or about.extension</small>
+                    
+                    <br/><br/>
+            </div>    
+        </form>
+    </div>
+<div class="container-fluid">
+            <div class="container-fluid col-md-4">
+            <div class="container-fluid col-md-8">
+                {% load static %}
+                <img src="{% static 'loading3.gif' %}" class="center">
+            </div>
+            </div>
+</div>
           <div class="table-responsive w-100 p-1 h-100 ">  
             <table class = 'table table-bordered table-condensed card-header'>                
                     <tr><th>Internal Links</th>
@@ -52,7 +58,7 @@
                             {% for item in data.internallinkname%}
                                 <tr>
                                     <td>
-                                     <a href="">{{item}}</a>
+                                     <a target="mayawati" href="/mypath?url=Excel/{{item}}" rel="noopener noreferrer" target="_blank">{{item}}</a>
                                     </td>
                                 </tr>
                                 {%  endfor  %}

@@ -8,6 +8,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+    <script text="text/javascript">
+        function dispTblContents() {
+         var pName = document.getElementById("pName").innerHTML;
+         var pAddress = document.getElementById("pAddress").innerHTML;
+         var pEmail = document.getElementById("pEmail").innerHTML;
+        
+         alert(pName + " " + pAddress + " " + pEmail);
+        }
+        </script>
+
+
+
 </head>
 <body>
     <div class="container-fluid">
@@ -38,11 +51,30 @@
         <div class = "container-fluid h-100 p-5">
             
         </div>
-        <div class = "container-fluid h-100 p-5">
-            <a href="F:///ProjectDjango//websiteanalyzer//templates//Excel//varanasikshetra$com##myCarousel.xlsx">click me</a>
-        </div>
+      
         <div class = "container-fluid h-100 p-4">
             
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Address </th>
+                          <th>Email</th>
+                      </tr>
+                  </thead>
+              
+                  <tbody>
+                      <tr onclick="dispTblContents();" >
+                          <td id="pName">Ricardo Lucero</td>
+                          <td id="pAddress">Mexico City, Mexico</td>
+                          <td id="pEmail">rlucero@test.com</td>
+                      </tr>
+                  </tbody>
+              
+               </table>
         </div>
         {% include 'includes/footer.html' %}
     </div>

@@ -1,3 +1,4 @@
+from nltk.corpus.reader import wordlist
 import requests
 from urllib.request import urlparse, urljoin
 from bs4 import BeautifulSoup as bs
@@ -80,11 +81,11 @@ def getLinks(baseurl,currenturl):
 
 
 def getInternalLinks(internallinks):
-    # Replacing all the symbol 
+    # Replacing all the symbol
     intlinklist = []
     for link in internallinks:
-        link = link.replace("http://","").replace("https://","").replace(".","_").replace("/","_")
-        intlinklist = intlinklist + [link]
+        link = link.replace("http://","").replace("https://","").replace(".","_").replace("/","_").replace("#", "_")
+        intlinklist = intlinklist + [link+".html"]
     return intlinklist
 
 def getExternalLinks(externallinks):
@@ -119,7 +120,7 @@ def writeInExcel(baseurl,currenturl):
             df = df.append(a,ignore_index=False)
             #df.to_excel("templates//Excel//{}.xlsx".format(name),index=False)
             html = df.to_html(border=1)
-            text_file = open("templates//Excel//{}.html".format(name),"w",encoding="utf-8")
+            text_file = open("templates//Excel//{}".format(name),"w",encoding="utf-8")
             text_file.writelines('<meta charset = "UTF-8">\n')
             text_file.write(html)
             text_file.close()
@@ -143,37 +144,73 @@ def cleanme(content):
 
 
 def contentProcessing(content):
-  
-
   text_token = wt(content)
   #print(text_token)
-
   wordwithoutsw = [word for word in text_token if not word in sw.words()]
-
-
   wordswithfrequencies = nltk.FreqDist(wordwithoutsw)
-  print(wordswithfrequencies)
+  wordset = set(wordwithoutsw)
+  #print(wordset)
+  
+  #print(type(wordswithfrequencies))
   keyvaluespairs = wordswithfrequencies.items()
-  print(keyvaluespairs)
   n = len(wordswithfrequencies)
-  wordswithfrequencies.plot(n,cumulative=False)
-  return ""
+  #wordswithfrequencies.plot(n,cumulative=False)
+  return wordset,keyvaluespairs
+
+"""
+baseurl="http://varanasikshetra.com/"
+"""
+currenturl = "http://varanasikshetra.com/"
 
 
+htmlpage = getUrlContent(currenturl)
+content = cleanme(htmlpage)
+wordset, keyvaluepairs = contentProcessing(content)
+
+#print(keyvaluepairs)
+travelset=set(["Sarovar","holiest","travel","Pandava","Rameshwar","temple","booking","Dharmic","Heritage","Mandirs","Ghats","Rivers","Ghat","River","Ganga","Viswanath","Prakriti","Hindus","Linga","Yatra"])
+matches=travelset.intersection(wordset)
+print("matchkeywords = ",matches)
+newset={}
+#print(type(keyvaluepairs))
+for x in keyvaluepairs:
+    if x[0] in matches:
+        newset[x[0]]=x[1]
+print("matchkeywordfrequency = ",newset)
 
 
+newsetcount = len(newset)
+keyvaluepairscount = len(keyvaluepairs)
+matchingpercentage = (newsetcount/keyvaluepairscount)*100 
+
+print("newsetcount = ",newsetcount)
+print("keyValuepaircount = ",keyvaluepairscount)
+print("matchingpercentage = ",matchingpercentage)
+
+matcheskeys = list(newset.keys())
+matchesvalues = list(newset.values())
+#plt.rcParams['figure.figsize'] = [10, 10]
+plt.rcParams.update({'font.size':9})
+plt.bar(range(len(newset)), matchesvalues, tick_label=matcheskeys,color ='maroon',width=0.2)
+plt.xlabel("Keyword Names")
+plt.ylabel("Frequency of Keywords")
+plt.title(currenturl)
+plt.show()
 
 
-def allFunctionCall(baseurl,currenturl):
+def allFunctionCall(baseurl, currenturl):
     #baseurl="http://varanasikshetra.com/"
     #currenturl="http://varanasikshetra.com/"
-    internallinks,externallinks=getLinks(baseurl,currenturl)
+    internallinks, externallinks=getLinks(baseurl, currenturl)
     internallinkname = getInternalLinks(internallinks)
+    detail = {"InternalLinks": list(internallinks), "InternalLinksName": list(internallinkname)}
+    df = pd.DataFrame(detail)
+    df.to_excel("F://ProjectDjango//websiteanalyzer//templates//Excel//main.xlsx", index=False)
     #print(internallinks)
-    #writeInExcel(baseurl,currenturl)
+    writeInExcel(baseurl, currenturl)
     """
     html = getUrlContent(currenturl)
     content = cleanme(html)
     contentProcessing(content)"""
-    return internallinks,internallinkname,externallinks
-#allFunctionCall(baseurl,currenturl)
+    return internallinks, internallinkname, externallinks
+#print(allFunctionCall(baseurl,currenturl))

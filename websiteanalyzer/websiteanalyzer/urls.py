@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',views.homeviews),
     path('list/',views.abc),
-    path('excel/',views.goToExcel)
+    path('excel/',views.goToExcel),
+    path('mypath/',views.mypath)
 ]
