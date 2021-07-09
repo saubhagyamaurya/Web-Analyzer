@@ -190,11 +190,11 @@ print("matchingpercentage = ",matchingpercentage)
 matcheskeys = list(newset.keys())
 matchesvalues = list(newset.values())
 #plt.rcParams['figure.figsize'] = [10, 10]
-plt.rcParams.update({'font.size':9})
-plt.bar(range(len(newset)), matchesvalues, tick_label=matcheskeys,color ='maroon',width=0.2)
-plt.xlabel("Keyword Names")
-plt.ylabel("Frequency of Keywords")
-plt.title(currenturl)
+plt.rcParams.update({'font.size':6})
+plt.bar(range(len(newset)), matchesvalues, tick_label=matcheskeys, color ='maroon', width=0.25)
+plt.xlabel("Keyword Names",fontsize=10,fontweight='bold')
+plt.ylabel("Frequency of Keywords",fontsize=10,fontweight='bold')
+plt.title(currenturl,fontsize=10,fontweight='bold')
 plt.show()
 
 
