@@ -159,7 +159,7 @@ def contentProcessing(content):
 
 """
 baseurl="http://varanasikshetra.com/"
-"""
+
 currenturl = "http://varanasikshetra.com/"
 
 
@@ -190,13 +190,14 @@ print("matchingpercentage = ",matchingpercentage)
 matcheskeys = list(newset.keys())
 matchesvalues = list(newset.values())
 #plt.rcParams['figure.figsize'] = [10, 10]
+
 plt.rcParams.update({'font.size':6})
 plt.bar(range(len(newset)), matchesvalues, tick_label=matcheskeys, color ='maroon', width=0.25)
 plt.xlabel("Keyword Names",fontsize=10,fontweight='bold')
 plt.ylabel("Frequency of Keywords",fontsize=10,fontweight='bold')
 plt.title(currenturl,fontsize=10,fontweight='bold')
 plt.show()
-
+"""
 
 def allFunctionCall(baseurl, currenturl):
     #baseurl="http://varanasikshetra.com/"
@@ -207,10 +208,14 @@ def allFunctionCall(baseurl, currenturl):
     df = pd.DataFrame(detail)
     df.to_excel("F://ProjectDjango//websiteanalyzer//templates//Excel//main.xlsx", index=False)
     #print(internallinks)
-    writeInExcel(baseurl, currenturl)
+    #writeInExcel(baseurl, currenturl)
     """
     html = getUrlContent(currenturl)
     content = cleanme(html)
     contentProcessing(content)"""
     return internallinks, internallinkname, externallinks
-#print(allFunctionCall(baseurl,currenturl))
+"""
+baseurl="http://varanasikshetra.com/"
+currenturl="http://varanasikshetra.com/"
+print(allFunctionCall(baseurl,currenturl))
+"""

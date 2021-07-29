@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Analyzer</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container-fluid">
+        {% include 'includes/header.html' %}
+        <br/><br/>
+        <div class="container-fluid">
+            <a target="mayawati" href="/" rel="noopener noreferrer" target="_blank"><center>Click me for open Home</center></a>
+            <br/>
+        </div>
+        <form method="POST">
+            <div class = "row">
+                
+                    {%csrf_token %}                
+                    <div class="container-fluid col-md-6"><input class="form-control" type = "text" placeholder="Url" name = "currenturl" value="{{data.currenturl}}" required></div>
+                    <div class ="col-md-6"><input class="btn btn-outline-primary" type="submit" value="Process"></div>
+                    <small class="form-text text-muted container-fluid col-md-12">URL of any Website Ex: www.abc.com</small>
+                    <br/><br/>
+            </div>    
+        </form>
+    </div>
+    <div class="container-fluid">
+            <div class="container-fluid col-md-12">
+                {% load static %}
+                <img src="{% static 'Matchingpercentage.png' %}"/>
+            </div>
+    </div>
+    <br/>
+    <div class="container-fluid h-100 p-4">
+        <div class="table-responsive w-100 p-1 h-100 ">
+        <h5 class="text-center">{{data.currenturl}}</h5>
+        <div class="table-responsive w-100 p-1 h-100 ">
+        <table class = 'table table-bordered table-condensed table-hover card-header'>
+            
+               <tr>
+                {% for key in data.keyname%}
+                    <th colspan="3"><center> {{ key }} </center></th>
+                {% endfor %}
+               </tr>
+               <tr>
+                {% for key in data.keyname%}
+                    <th><center>Total Word</center></th>
+                    <th><center>Match count</center></th>
+                    <th><center>Match %</center></th>
+                {% endfor %}
+               </tr>
+               <tr>
+                {% for val in data2.detaillist%}
+                        <td><center>{{val}}</center></td>    
+                {%endfor%}
+               </tr>            
+            </table>
+        </div>    
+    </div>
+</div>
+
+
+
+
+<!--
+<div class = "container-fluid h-100 p-4">
+          <div class="table-responsive w-100 p-1 h-100 ">  
+            <table class = 'table table-bordered table-condensed card-header'>                
+                    <tr><th>Internal Links</th>
+                        <th>File Name</th>
+                        <th>External Links</th></tr>
+                    <tr>
+                        <td>
+                            <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                                {% for item in data.internallinks%}
+                                <tr>
+                                    <td>
+                                        <a target="mayawati" href="{{item}}" rel="noopener noreferrer" target="_blank">{{item}}</a>
+                                    </td>
+                                </tr>
+                                {%  endfor  %}
+                            </table>
+                        </td>
+                        <td>
+                        <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                            {% for item in data.internallinkname%}
+                                <tr>
+                                    <td>
+                                     <a target="mayawati" href="/mypath?url=Excel/{{item}}" rel="noopener noreferrer" target="_blank">{{item}}</a>
+                                    </td>
+                                </tr>
+                                {%  endfor  %}
+                        </table>
+                        </td>
+                        <td>
+                            <table class = 'table d-inline-block card table-hover table-bordered table-condensed'>
+                                {% for item in data.externallinks%}
+                                    <tr>
+                                        <td>
+                                            {{item}}
+                                        </td>
+                                    </tr>
+                                    {%  endfor  %}
+                            </table>
+                            </td>
+                    </tr>
+                    
+        </table>
+            
+    </div>
+</div>
+-->
+    <div class = "container-fluid">
+        {% include 'includes/footer.html' %}
+    </div>
+</body>
+</html>

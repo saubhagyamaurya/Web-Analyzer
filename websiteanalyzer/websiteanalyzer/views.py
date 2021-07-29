@@ -1,9 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .import websiteanalyzer as ws
-import os
 from django.template import Context, loader
 import pandas as pd
+from .import analyzer as an
+import json
 
 
 def homeviews(request):
@@ -21,9 +22,28 @@ def homeviews(request):
         data = {'baseurl':"",'currenturl':"",'started':"","inernallinks":""}
         return render(request,"home.html",{'data':data})
 
-def goToExcel(request):
-    #url=request.GET['url']
-    return render(request,"varanasikshetra_com_.html")
+
+
+
+def analyzerviews(request):
+    try:
+        currenturl=request.POST.__getitem__("currenturl")
+        print(currenturl)
+        matchinpercentagedict,figname, detaillist= an.allfunctioncall(currenturl)
+        #print(matchinpercentagedict,allresultlist,figname)
+        #matchinpercentagedict = json.dumps(matchinpercentagedict)
+        keyname = list(matchinpercentagedict.keys())
+        matchvalue = list(matchinpercentagedict.values())
+        data = {"currenturl":currenturl, "keyname":keyname, "matchvalue":matchvalue,"figname":str(figname) +".png"}
+        data2 = {"detaillist":detaillist}
+        return render(request,"analyzer.html",{'data':data,"data2":data2})
+    except:
+        data = {'currenturl':"", "matchingpercentage":"","allresultlist":"","figname":""}
+        return render(request,"analyzer.html",{'data':data})
+
+
+
+
 
 def mypath(request):
     if(request.GET):
@@ -31,9 +51,9 @@ def mypath(request):
         print(url)
         return render(request,url)
     return HttpResponse("No Get")
-def abc(request):
-    l=[1,2,3,4] 
-    data = {'l':l}
-    return render(request,'list.html',{'data':data})
+
+
+
+
 
 
